@@ -6,6 +6,12 @@ IMAGE_FILE = '/Users/tunahansalih/School/ComputerVision/SkinColorDetection/Image
 
 img = cv2.imread(IMAGE_FILE, 1)
 
+# cv2.imshow('Original Image', img)
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()
+
+img[0] = np.zeros_like(img[0])
+
 cv2.imshow('Original Image', img)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
