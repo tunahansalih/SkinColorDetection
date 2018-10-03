@@ -61,6 +61,9 @@ def part2(img):
     cv2.imwrite('img_001_v.jpg', img_v)
     display_image(img_v, bgr=False)
 
+def part3(img):
+    pass
+
 img = cv2.imread(IMAGE_FILE)
 
 part1(img)
