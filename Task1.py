@@ -94,6 +94,6 @@ img = cv2.imread(IMAGE_FILE)
 
 img = part1(img)
 img_hsv = part2(img)
-hist = part3(img, img_hsv)
+part3(img, img_hsv)
 
 #assert np.sum(hist) == (img.shape[0]*img.shape[1])
