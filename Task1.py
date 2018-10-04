@@ -22,13 +22,20 @@ def get_single_channel(img, channel_index):
     return single_channel
 
 # Creates histogram from the specified channel of specified cimage
-def create_histogram(img, channel):
-    hist = np.zeros(256)
+def create_histogram(img, channel, bin=256):
+    hist = np.zeros(bin)
+    size = 256/bin
     for i in img[:,:,channel]:
         for j in i:
-            hist[i] += 1
+            hist[int(j/size)] += 1
         
     return hist
+
+def display_histogram(hist, bin=256):
+    plt.figure()
+    plt.bar(x=range(bin), height=hist, width=1.0)
+    plt.show()
+    pass
 
 # Hue values are between (0, 179) in OpenCV, it is mapped to (0, 255) for visualization purposes
 def map_hue(img, max_hue_val=179):
@@ -69,7 +76,8 @@ def part2(img, display=False):
 
 # Creating hist
 def part3(img, img_hsv):
-    hist_r = create_histogram(img, 2)
+    hist_r = create_histogram(img, 2, bin=10)
+    display_histogram(hist_r, bin=10)
     return hist_r
 
 
@@ -79,5 +87,4 @@ img = part1(img)
 img_hsv = part2(img)
 hist = part3(img, img_hsv)
 
-
-
+#assert np.sum(hist) == (img.shape[0]*img.shape[1])
