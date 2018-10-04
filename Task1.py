@@ -16,10 +16,12 @@ def display_image(img, bgr=True):
     plt.show()
          
 # Gets the specified channel from given image
-def get_single_channel(img, channel_index):
-    single_channel = np.zeros_like(img)
-    single_channel[:,:,channel_index] = img[:,:,channel_index]
-    return single_channel
+def get_single_channel(img, channel_index, rgb=True):
+    if rgb:
+        single_channel = np.zeros_like(img)
+        single_channel[:,:,channel_index] = img[:,:,channel_index]
+        return single_channel
+    return img[:,:,channel_index]
 
 # Creates histogram from the specified channel of specified cimage
 def create_histogram(img, channel, bin=256):
@@ -58,13 +60,12 @@ def part1(img, display=False):
 # Part 2 of the Task 1, create single H, S, V channels from HSV images 
 def part2(img, display=False):
     img_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    
+    img_h = map_hue(get_single_channel(img_hsv, 0, rgb=False))
+    img_s = get_single_channel(img_hsv, 1, rgb=False)
+    img_v = get_single_channel(img_hsv, 2, rgb=False)
 
-    img_h = map_hue(get_single_channel(img_hsv, 0))
-    img_s = get_single_channel(img_hsv, 1)
-    img_v = get_single_channel(img_hsv, 2)
-
-    img_hsv = img_h + img_s + img_v
-    cv2.imwrite('img_001_hsv.jpg', img_hsv)
+    img_hsv = np.stack((img_h, img_s, img_v), axis=2)
 
     cv2.imwrite('img_001_h.jpg', img_h)
     if display: display_image(img_h, bgr=False)
