@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 
-#Path to original image
+# Path to original image
 IMAGE_FILE = os.path.join('Images', 'Original Images', 'img_001.jpg')
 
 # OpenCV uses BGR instead og RGB, that's why channels are different with matplotlib
@@ -71,7 +71,16 @@ def part2(img, display=False):
 # Creating hist
 def part3(img, img_hsv):
     hist_r = create_histogram(img, 2)
-    return hist_r
+    hist_g = create_histogram(img, 1)
+    hist_b = create_histogram(img, 0)
+
+    hist_h = create_histogram(img_hsv, 0)
+    hist_s = create_histogram(img_hsv, 1)
+    hist_v = create_histogram(img_hsv, 2)
+
+
+
+    return 
 
 
 img = cv2.imread(IMAGE_FILE)
