@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 
-# Path to original image
+#Path to original image
 IMAGE_FILE = os.path.join('Images', 'Original Images', 'img_001.jpg')
 
 # OpenCV uses BGR instead og RGB, that's why channels are different with matplotlib
@@ -24,13 +24,20 @@ def get_single_channel(img, channel_index, rgb=True):
     return img[:,:,channel_index]
 
 # Creates histogram from the specified channel of specified cimage
-def create_histogram(img, channel):
-    hist = np.zeros(256)
+def create_histogram(img, channel, bin=256):
+    hist = np.zeros(bin)
+    size = 256/bin
     for i in img[:,:,channel]:
         for j in i:
-            hist[i] += 1
+            hist[int(j/size)] += 1
         
     return hist
+
+def display_histogram(hist, bin=256):
+    plt.figure()
+    plt.bar(x=range(bin), height=hist, width=1.0)
+    plt.show()
+    pass
 
 # Hue values are between (0, 179) in OpenCV, it is mapped to (0, 255) for visualization purposes
 def map_hue(img, max_hue_val=179):
@@ -71,16 +78,16 @@ def part2(img, display=False):
 # Creating hist
 def part3(img, img_hsv):
     hist_r = create_histogram(img, 2)
+    display_histogram(hist_r)
     hist_g = create_histogram(img, 1)
+    display_histogram(hist_g)
     hist_b = create_histogram(img, 0)
-
+    display_histogram(hist_b)
     hist_h = create_histogram(img_hsv, 0)
     hist_s = create_histogram(img_hsv, 1)
     hist_v = create_histogram(img_hsv, 2)
 
-
-
-    return 
+    pass
 
 
 img = cv2.imread(IMAGE_FILE)
@@ -89,5 +96,4 @@ img = part1(img)
 img_hsv = part2(img)
 hist = part3(img, img_hsv)
 
-
-
+#assert np.sum(hist) == (img.shape[0]*img.shape[1])
