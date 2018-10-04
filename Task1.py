@@ -33,9 +33,14 @@ def create_histogram(img, channel, bin=256):
         
     return hist
 
-def display_histogram(hist, bin=256):
+def display_histogram(hist, bin=256, xlabel='', fname=''):
     plt.figure()
     plt.bar(x=range(bin), height=hist, width=1.0)
+    if xlabel != '': plt.xlabel(xlabel)
+    plt.xlim(0, 255)
+    plt.xticks(np.arange(0, 256, max(int(256/bin), 32)))
+    plt.ylabel('# of Occurence')
+    if fname != '': plt.savefig(fname=fname)
     plt.show()
     pass
 
@@ -78,14 +83,18 @@ def part2(img, display=False):
 # Creating hist
 def part3(img, img_hsv):
     hist_r = create_histogram(img, 2)
-    display_histogram(hist_r)
+    display_histogram(hist_r, xlabel='Red Values', fname='hist_r')
     hist_g = create_histogram(img, 1)
-    display_histogram(hist_g)
+    display_histogram(hist_g, xlabel='Green Values', fname='hist_g')
     hist_b = create_histogram(img, 0)
-    display_histogram(hist_b)
+    display_histogram(hist_b, xlabel='Blue Values', fname='hist_b')
+
     hist_h = create_histogram(img_hsv, 0)
+    display_histogram(hist_h, xlabel='Hue Values', fname='hist_h')
     hist_s = create_histogram(img_hsv, 1)
+    display_histogram(hist_s, xlabel='Saturation Values', fname='hist_s')
     hist_v = create_histogram(img_hsv, 2)
+    display_histogram(hist_v, xlabel='Brightness Values', fname='hist_v')
 
     pass
 
