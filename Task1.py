@@ -15,36 +15,41 @@ def display_image(img, bgr=True):
         plt.imshow(img)
     plt.show()
          
-    
+# Gets the specified channel from given image
 def get_single_channel(img, channel_index):
     single_channel = np.zeros_like(img)
     single_channel[:,:,channel_index] = img[:,:,channel_index]
     return single_channel
 
+# Creates histogram from the specified channel of specified cimage
 def create_histogram(img, channel):
-    hist = np.zeros(255)
+    hist = np.zeros(256)
     for i in img[:,:,channel]:
-        hist[i] += 1
+        for j in i:
+            hist[i] += 1
         
     return hist
 
+# Hue values are between (0, 179) in OpenCV, it is mapped to (0, 255) for visualization purposes
 def map_hue(img, max_hue_val=179):
      return (img * (max_hue_val / 255)).astype(int)
         
-
-def part1(img):
+# Part 1 of the Task 1, create single R, G, B channels from RGB images 
+def part1(img, display=False):
     img_r = get_single_channel(img, 2)
     img_g = get_single_channel(img, 1)
     img_b = get_single_channel(img, 0)
 
     cv2.imwrite('img_001_r.jpg', img_r)
-    display_image(img_r)
+    if display: display_image(img_r)
     cv2.imwrite('img_001_g.jpg', img_g)
-    display_image(img_g)
+    if display: display_image(img_g)
     cv2.imwrite('img_001_b.jpg', img_b)
-    display_image(img_b)
+    if display: display_image(img_b)
+    return img
 
-def part2(img):
+# Part 2 of the Task 1, create single H, S, V channels from HSV images 
+def part2(img, display=False):
     img_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
     img_h = map_hue(get_single_channel(img_hsv, 0))
@@ -55,20 +60,24 @@ def part2(img):
     cv2.imwrite('img_001_hsv.jpg', img_hsv)
 
     cv2.imwrite('img_001_h.jpg', img_h)
-    display_image(img_h, bgr=False)
+    if display: display_image(img_h, bgr=False)
     cv2.imwrite('img_001_s.jpg', img_s)
-    display_image(img_s, bgr=False)
+    if display: display_image(img_s, bgr=False)
     cv2.imwrite('img_001_v.jpg', img_v)
-    display_image(img_v, bgr=False)
+    if display: display_image(img_v, bgr=False)
+    return img_hsv
 
-def part3(img):
-    pass
+# Creating hist
+def part3(img, img_hsv):
+    hist_r = create_histogram(img, 2)
+    return hist_r
+
 
 img = cv2.imread(IMAGE_FILE)
 
-part1(img)
-part2(img)
-part3(img)
+img = part1(img)
+img_hsv = part2(img)
+hist = part3(img, img_hsv)
 
 
 
