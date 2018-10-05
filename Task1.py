@@ -47,7 +47,7 @@ def display_histogram(hist, bin=256, xlabel='', fname='', disp=False):
     if xlabel != '':
         plt.xlabel(xlabel)
     plt.xlim(0, 255)
-    plt.xticks(np.append(np.arange(0, 256, max(int(256 / bin), 32), 255)))
+    plt.xticks(np.arange(0, 256, max(int(256 / bin), 32)))
     plt.ylabel('# of Occurence')
     plt.box(on=None)
     if fname != '':
