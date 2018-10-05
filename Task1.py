@@ -5,7 +5,7 @@ import os
 
 # Path to original image
 IMAGE_FILE = os.path.join('Images', 'Original Images', 'img_001.jpg')
-
+OUTPUT_FOLDER = os.path.join('Images', 'Output Images')
 # OpenCV uses BGR instead og RGB, that's why channels are different with
 # matplotlib
 
@@ -21,7 +21,7 @@ def display_image(img, bgr=True):
 # Gets the specified channel from given image
 
 
-def get_single_channel(img, channel_index, rgb=True):
+def get_single_channel(img, channel_index, rgb=False):
     if rgb:
         single_channel = np.zeros_like(img)
         single_channel[:, :, channel_index] = img[:, :, channel_index]
@@ -51,7 +51,7 @@ def display_histogram(hist, bin=256, xlabel='', fname='', disp=False):
     plt.ylabel('# of Occurence')
     plt.box(on=None)
     if fname != '':
-        plt.savefig(fname=fname)
+        plt.savefig(fname=os.path.join(OUTPUT_FOLDER, fname))
     if disp:
         plt.show()
     pass
@@ -71,13 +71,13 @@ def part1(img, display=False):
     img_g = get_single_channel(img, 1)
     img_b = get_single_channel(img, 0)
 
-    cv2.imwrite('img_001_r.jpg', img_r)
+    cv2.imwrite(os.path.join(OUTPUT_FOLDER, 'img_001_r.jpg'), img_r)
     if display:
         display_image(img_r)
-    cv2.imwrite('img_001_g.jpg', img_g)
+    cv2.imwrite(os.path.join(OUTPUT_FOLDER, 'img_001_g.jpg'), img_g)
     if display:
         display_image(img_g)
-    cv2.imwrite('img_001_b.jpg', img_b)
+    cv2.imwrite(os.path.join(OUTPUT_FOLDER, 'img_001_b.jpg'), img_b)
     if display:
         display_image(img_b)
     return img
@@ -94,18 +94,19 @@ def part2(img, display=False):
 
     img_hsv = np.stack((img_h, img_s, img_v), axis=2)
 
-    cv2.imwrite('img_001_h.jpg', img_h)
+    cv2.imwrite(os.path.join(OUTPUT_FOLDER, 'img_001_h.jpg'), img_h)
     if display:
         display_image(img_h, bgr=False)
-    cv2.imwrite('img_001_s.jpg', img_s)
+    cv2.imwrite(os.path.join(OUTPUT_FOLDER, 'img_001_s.jpg'), img_s)
     if display:
         display_image(img_s, bgr=False)
-    cv2.imwrite('img_001_v.jpg', img_v)
+    cv2.imwrite(os.path.join(OUTPUT_FOLDER, 'img_001_v.jpg'), img_v)
     if display:
         display_image(img_v, bgr=False)
     return img_hsv
 
-# Creating hist
+
+# Creating histogram
 
 
 def part3(img, img_hsv):

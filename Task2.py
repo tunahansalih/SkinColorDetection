@@ -4,11 +4,14 @@ import matplotlib.pyplot as plt
 import os
 import glob
 
-IMAGE_FOLDER = os.path.join('Images', 'Ground Truths')
-
+ORIG_IMAGE_FOLDER = os.path.join('Images', 'Original Images')
+MASK_IMAGE_FOLDER = os.path.join('Images', 'Ground Truths')
+OUTPUT_IMAGE_FOLDER = os.path.join('Images', 'Output Images')
 # OpenCV uses BGR instead og RGB, that's why channels are different with
 # matplotlib
 
+def create_bitmask(img):
+    return np.where(np.equal(img, np.zeros_like(img)), npnp.full_like())
 
 def display_image(img, bgr=True):
     plt.figure()
@@ -19,8 +22,13 @@ def display_image(img, bgr=True):
     plt.show()
 
 
-filenames = [img for img in glob.glob(os.path.join(IMAGE_FOLDER, "*.jpg"))]
+orig_filenames = [img for img in glob.glob(os.path.join(ORIG_IMAGE_FOLDER, "*.jpg"))][:10]
+mask_filenames = [img for img in glob.glob(os.path.join(MASK_IMAGE_FOLDER, "*.jpg"))][:10]
+orig_images = []
+mask_images = []
 
-for f in filenames:
-	pass
-	
+for f in orig_filenames:
+    orig_images.append(cv2.imread(f))
+
+for f in mask_filenames:
+    mask_images.append(cv2.imread(f))
