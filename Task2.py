@@ -32,3 +32,15 @@ for f in orig_filenames:
 
 for f in mask_filenames:
     mask_images.append(cv2.imread(f))
+
+def part1(mask_images):
+    binary_skin_pixel_masks = []
+    for mask_img in mask_images:
+        mask_img[mask_img > 0] = 255
+        binary_skin_pixel_masks.append(mask_img)
+    return binary_skin_pixel_masks
+
+
+binary_skin_pixel_masks = part1(mask_images)
+
+

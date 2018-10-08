@@ -61,7 +61,7 @@ def display_histogram(hist, bin=256, xlabel='', fname='', disp=False):
 
 
 def map_hue(img, max_hue_val=179):
-    return (img * (max_hue_val / 255)).astype(int)
+    return (img * (255 / max_hue_val)).astype(int)
 
 # Part 1 of the Task 1, create single R, G, B channels from RGB images
 
