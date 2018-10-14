@@ -3,8 +3,7 @@ import cv2
 import os
 import glob
 import matplotlib.pyplot as plt
-import pickle
-
+import json
 
 class K_Means:
     def __init__(self, k=3, tolerance=0.1, max_iteration=500):
@@ -60,7 +59,7 @@ range_dicts = []
 for f in orig_filenames:
     img = cv2.imread(f)
     print(f)
-    for k in range(3, 12, 4):
+    for k in [7, 11]:
         print(k)
         ranges_dict = {}
         kmeans = K_Means(k=k, tolerance=0.1, max_iteration=20)
@@ -69,9 +68,8 @@ for f in orig_filenames:
         ranges_dict["filename"] = f
         ranges_dict["ranges"] = ranges
         range_dicts.append(ranges_dict)
-
-pickle.dump(range_dicts, 'range_dicts.p')
-
+        with open('ranges.json', 'w') as outfile:
+            json.dump(range_dicts, outfile)
 
 
 
