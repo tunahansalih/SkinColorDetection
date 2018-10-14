@@ -53,20 +53,19 @@ class K_Means:
 ORIG_IMAGE_FOLDER = os.path.join('Images', 'Original Images')
 orig_filenames = [img for img in glob.glob(os.path.join(ORIG_IMAGE_FOLDER, "*.jpg"))]
 orig_filenames.sort()
-orig_filenames = orig_filenames[10:]
+orig_filenames = orig_filenames[11:]
 
 range_dicts = []
 for f in orig_filenames:
     img = cv2.imread(f)
     print(f)
-    for k in [7, 11]:
-        print(k)
-        ranges_dict = {}
-        kmeans = K_Means(k=k, tolerance=0.1, max_iteration=20)
-        ranges = kmeans.run_on_image(img)
-        ranges_dict["k"] = k
-        ranges_dict["filename"] = f
-        ranges_dict["ranges"] = ranges
-        range_dicts.append(ranges_dict)
-        with open('ranges.json', 'wb') as outfile:
-            pickle.dump(range_dicts, outfile)
+    k = 7
+    ranges_dict = {}
+    kmeans = K_Means(k=k, tolerance=0.1, max_iteration=10)
+    ranges = kmeans.run_on_image(img)
+    ranges_dict["k"] = k
+    ranges_dict["filename"] = f
+    ranges_dict["ranges"] = ranges
+    range_dicts.append(ranges_dict)
+    with open('ranges%s.json' % f, 'wb') as outfile:
+        pickle.dump(range_dicts, outfile)
