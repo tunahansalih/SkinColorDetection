@@ -38,7 +38,7 @@ class K_Means:
         cluster_centers = [points[i] for i in np.random.choice(range(points.shape[0]), self.k, )]
         for i in range(self.max_iteration):
             print(i)
-            clusters = [[] for _ in range(self.k)]
+            clusters = [[[122, 122, 122]] for _ in range(self.k)]
             [clusters[np.argmin([self.euclidean_dist(p, c) for c in cluster_centers])].append(p) for p in points]
             new_cluster_centers = [np.mean(cluster, 0) for cluster in clusters]
             if np.sum(np.divide(np.abs(np.subtract(cluster_centers, new_cluster_centers)),
@@ -53,7 +53,7 @@ class K_Means:
 ORIG_IMAGE_FOLDER = os.path.join('Images', 'Original Images')
 orig_filenames = [img for img in glob.glob(os.path.join(ORIG_IMAGE_FOLDER, "*.jpg"))]
 orig_filenames.sort()
-orig_filenames = orig_filenames[11:]
+orig_filenames = orig_filenames[10:]
 
 range_dicts = []
 for f in orig_filenames:
@@ -67,5 +67,5 @@ for f in orig_filenames:
     ranges_dict["filename"] = f
     ranges_dict["ranges"] = ranges
     range_dicts.append(ranges_dict)
-    with open('ranges%s.json' % f, 'wb') as outfile:
+    with open('ranges%s.p' % os.path.basename(f), 'wb') as outfile:
         pickle.dump(range_dicts, outfile)
