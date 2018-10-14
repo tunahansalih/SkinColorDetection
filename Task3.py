@@ -3,7 +3,7 @@ import cv2
 import os
 import glob
 import matplotlib.pyplot as plt
-import json
+import pickle
 
 class K_Means:
     def __init__(self, k=3, tolerance=0.1, max_iteration=500):
@@ -68,10 +68,5 @@ for f in orig_filenames:
         ranges_dict["filename"] = f
         ranges_dict["ranges"] = ranges
         range_dicts.append(ranges_dict)
-        with open('ranges.json', 'w') as outfile:
-            json.dump(range_dicts, outfile)
-
-
-
-
-
+        with open('ranges.json', 'wb') as outfile:
+            pickle.dump(range_dicts, outfile)
