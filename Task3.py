@@ -38,7 +38,7 @@ class K_Means:
         cluster_centers = [points[i] for i in np.random.choice(range(points.shape[0]), self.k)]
         for i in range(self.max_iteration):
             print(i)
-            clusters = [[cluster_centers[i]] for i in range(self.k)]
+            clusters = [[[]] for i in range(self.k)]
             [clusters[np.argmin([self.euclidean_dist(p, c) for c in cluster_centers])].append(p) for p in points]
             new_cluster_centers = [np.mean(cluster, 0) for cluster in clusters]
             if np.sum(np.divide(np.abs(np.subtract(cluster_centers, new_cluster_centers)),
